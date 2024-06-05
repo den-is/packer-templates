@@ -12,13 +12,11 @@ variable "iso" {
 }
 
 variable "sha256sum" {
-  type    = string
-  default = "ee3ac97fdffab58652421941599902012179c37535aece76824673105169c4a2"
+  type = string
 }
 
 variable "bridge_nic" {
-  type    = string
-  default = "en7: AX88179A"
+  type = string
 }
 
 variable "default_ssh_key" {
@@ -48,7 +46,6 @@ source "virtualbox-iso" "main" {
   boot_wait              = "7s"
   boot_command = [
     "<up><wait><tab>",
-    # "<tab><bs><bs><bs><bs><bs>",
     "inst.text ",
     "inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg",
     "<enter><wait>"
