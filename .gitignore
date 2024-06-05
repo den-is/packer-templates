@@ -1,5 +1,6 @@
 **.pkrvars.hcl
 output
+tmp
 
 **.log
 **.bkp
