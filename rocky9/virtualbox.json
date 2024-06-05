@@ -1,0 +1,52 @@
+{
+  "variables": {
+    "bridge_adapter_name": "xxx",
+    "iso_location": "xxx",
+    "sha256_checksum": "xxx"
+  },
+  "builders": [
+    {
+      "boot_command": [
+        "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "boot_wait": "5s",
+      "disk_size": 20480,
+      "format": "ova",
+      "guest_additions_mode": "disable",
+      "guest_os_type": "RedHat_64",
+      "hard_drive_interface": "sata",
+      "headless": true,
+      "http_directory": "http",
+      "iso_checksum": "sha256:{{user `sha256_checksum`}}",
+      "iso_url": "{{user `iso_location`}}",
+      "shutdown_command": "echo 'packer' | sudo -S /sbin/halt -h -p",
+      "ssh_username": "packer",
+      "ssh_password": "packer",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"],
+        ["modifyvm", "{{.Name}}", "--vram", "32"],
+        ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga" ],
+        ["modifyvm", "{{.Name}}", "--description", "Default credentials:\npacker packer\nor\nroot packer\nDefault hostname: unconfigured.dev\nDHCP enabled"]
+      ],
+      "vboxmanage_post": [
+        ["modifyvm", "{{.Name}}", "--nic1", "bridged", "--bridgeadapter1", "{{user `bridge_adapter_name`}}"]
+      ],
+      "vm_name": "rocky9"
+    }
+  ],
+  "provisioners": [
+    {
+      "expect_disconnect": true,
+      "script": "scripts/main.sh",
+      "type": "shell"
+    },
+    {
+      "script": "scripts/cleanup.sh",
+      "type": "shell"
+    }
+  ]
+}
