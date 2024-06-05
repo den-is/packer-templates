@@ -51,8 +51,6 @@ source "virtualbox-iso" "main" {
     "<enter><wait>"
   ]
   vboxmanage = [
-    # https://stackoverflow.com/questions/75943117/packer-with-virtualbox-kickstart-cant-connect-to-web-server
-    # https://github.com/hashicorp/packer/issues/12118
     ["modifyvm", "{{ .Name }}", "--nat-localhostreachable1", "on"],
     ["modifyvm", "{{ .Name }}", "--memory", "1024"],
     ["modifyvm", "{{ .Name }}", "--cpus", "1"],
