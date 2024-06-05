@@ -1,3 +1,6 @@
+**.pkrvars.hcl
 output
 
+**.log
+**.bkp
 .envrc
