@@ -1,6 +1,7 @@
 # Rocky Linux 9 golden image packer template
 
 ## Instructions
+
 ```sh
 git clone https://github.com/den-is/packer-templates.git
 cd packer-templates/rocky9
