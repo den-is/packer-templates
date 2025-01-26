@@ -44,6 +44,8 @@ apt-get -y install --no-install-recommends \
   locales \
   tzdata
 
+apt-get -y remove --purge wpasupplicant
+
 updatedb
 
 echo -e "en_US ISO-8859-1\nen_US.UTF-8 UTF-8" > /etc/locale.gen
